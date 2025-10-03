@@ -4,21 +4,21 @@ use ink::prelude::{string::String, vec::Vec};
 
 use crate::data::PSP22Error;
 
+/// PSP22 Standard Interface (ERC20 equivalent for Polkadot)
+/// These traits serve as documentation and interface reference
+#[allow(dead_code)]
 pub trait PSP22 {
     /// Returns the total token supply.
-    #[ink(message)]
     fn total_supply(&self) -> U256;
 
     /// Returns the account balance for the specified `owner`.
     ///
     /// Returns `0` if the account is non-existent.
-    #[ink(message)]
     fn balance_of(&self, owner: H160) -> U256;
 
     /// Returns the amount which `spender` is still allowed to withdraw from `owner`.
     ///
     /// Returns `0` if no allowance has been set.
-    #[ink(message)]
     fn allowance(&self, owner: H160, spender: H160) -> U256;
 
     /// Transfers `value` amount of tokens from the caller's account to account `to`
@@ -34,7 +34,6 @@ pub trait PSP22 {
     /// # Errors
     ///
     /// Reverts with `InsufficientBalance` if the `value` exceeds the caller's balance.
-    #[ink(message)]
     fn transfer(&mut self, to: H160, value: U256, data: Vec<u8>) -> Result<(), PSP22Error>;
 
     /// Transfers `value` tokens on the behalf of `from` to the account `to`
@@ -63,7 +62,6 @@ pub trait PSP22 {
     ///
     /// If conditions for both `InsufficientBalance` and `InsufficientAllowance` errors are met,
     /// reverts with `InsufficientAllowance`.
-    #[ink(message)]
     fn transfer_from(
         &mut self,
         from: H160,
@@ -82,7 +80,6 @@ pub trait PSP22 {
     /// An `Approval` event is emitted.
     ///
     /// No-op if the caller and `spender` is the same address, returns success and no events are emitted.
-    #[ink(message)]
     fn approve(&mut self, spender: H160, value: U256) -> Result<(), PSP22Error>;
 
     /// Increases by `delta-value` the allowance granted to `spender` by the caller.
@@ -93,7 +90,6 @@ pub trait PSP22 {
     ///
     /// No-op if the caller and `spender` is the same address or `delta-value` is zero, returns success
     /// and no events are emitted.
-    #[ink(message)]
     fn increase_allowance(
         &mut self,
         spender: H160,
@@ -113,7 +109,6 @@ pub trait PSP22 {
     ///
     /// Reverts with `InsufficientAllowance` if `spender` and the caller are different addresses and
     /// the `delta-value` exceeds the allowance granted by the caller to `spender`.
-    #[ink(message)]
     fn decrease_allowance(
         &mut self,
         spender: H160,
@@ -121,18 +116,17 @@ pub trait PSP22 {
     ) -> Result<(), PSP22Error>;
 }
 
+#[allow(dead_code)]
 pub trait PSP22Metadata {
     /// Returns the token name.
-    #[ink(message)]
     fn name(&self) -> Option<String>;
     /// Returns the token symbol.
-    #[ink(message)]
     fn symbol(&self) -> Option<String>;
     /// Returns the token decimals.
-    #[ink(message)]
     fn decimals(&self) -> u8;
 }
 
+#[allow(dead_code)]
 pub trait PSP22Burnable {
     /// Burns `value` tokens from the senders account.
     ///
@@ -147,10 +141,10 @@ pub trait PSP22Burnable {
     /// # Errors
     ///
     /// Reverts with `InsufficientBalance` if the `value` exceeds the caller's balance.
-    #[ink(message)]
     fn burn(&mut self, value: U256) -> Result<(), PSP22Error>;
 }
 
+#[allow(dead_code)]
 pub trait PSP22Mintable {
     /// Mints `value` tokens to the senders account.
     ///
@@ -166,17 +160,15 @@ pub trait PSP22Mintable {
     ///
     /// Reverts with `Custom (max supply exceeded)` if the total supply increased by
     /// `value` exceeds maximal value of `u128` type.
-    #[ink(message)]
     fn mint(&mut self, value: U256) -> Result<(), PSP22Error>;
 }
 
+#[allow(dead_code)]
 pub trait PSP22Permit {
     /// Allows anyone to call approve on behalf of `owner` if the signature is valid.
     /// 
     /// Must provide the v, r, s parts of the signature.
-    #[ink(message)]
     fn permit(&mut self, owner: H160, spender: H160, value: U256, deadline: u64, v: u8, r: [u8; 32], s: [u8; 32]) -> Result<(), PSP22Error>;
 
-    #[ink(message)]
     fn nonces(&self, owner: H160) -> u128;
 }
