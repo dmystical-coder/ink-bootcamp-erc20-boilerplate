@@ -2,6 +2,14 @@
 
 A fully-featured ERC20-compatible memecoin smart contract built with ink! for Polkadot and Substrate-based chains.
 
+## Example Interaction
+
+Contract Address: `0x89f3DdAbb76103470BaBe31E5157bbF60A37c86C`
+
+![test name function](/assets/image-i.png)
+
+![test total supply function](/assets/image-ii.png)
+
 ## Features
 
 ### ✅ ERC20 Standard Compliance
